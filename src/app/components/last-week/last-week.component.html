@@ -1,0 +1,38 @@
+<div class="container">
+    <h1 class="text-center mb-5 mt-2">Last Week Leaderboard By Country</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-6 d-flex align-items-center">
+        <div class="form-floating mb-3 mr-3">
+          <input type="text" class="form-control" id="floatingInput" [formControl]="countryCode" placeholder="Example IN, US etc" size="sm" aria-describedby="countryCodeInput">
+          <label for="floatingInput">Country Code</label>
+          <div id="countryCodeInput" class="form-text">
+            Country Code Should Be Two Letter Code Only (Alpha-2)
+            Ex:- IN, US, ... 
+          </div>
+        </div>
+        <div class="mb-5 mx-3">
+          <button type="button" class="btn btn-dark" (click)="onClick()">Search</button>
+        </div>
+      </div>
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Rank</th>
+            <th scope="col">Name</th>
+            <th scope="col">Country</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+        @for(item of leaderboard; track item.ID){
+            <tr #i>
+                <th scope="row">{{i.rowIndex}}</th>
+                <td>{{item.Name}}</td>
+                <td>{{item.Country}}</td>
+                <td>{{item.Score}}</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

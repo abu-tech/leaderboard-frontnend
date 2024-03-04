@@ -11,19 +11,25 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 })
 export class LastWeekComponent {
   leaderboard: any[] = []
-  constructor(private leaderboardService: LeaderboardService) { }
+  isLoading = false
 
-  ngOnInit() {
-  }
+  constructor(private leaderboardService: LeaderboardService) { }
 
   countryCode = new FormControl("", [
     Validators.required
   ])
 
   onClick() {
+    this.isLoading = true
     this.leaderboardService.getLastWeekLeaderboardByCountry(this.countryCode.value).subscribe({
-      next: (data: any) => this.leaderboard = data,
-      error: (err) => console.log(err)
+      next: (data: any) => {
+        this.leaderboard = data
+        this.isLoading = false
+      },
+      error: (err) => {
+        console.log(err)
+        this.isLoading = false
+      }
     })
     this.countryCode.reset()
   }

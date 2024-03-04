@@ -11,6 +11,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 })
 export class UserRankComponent {
   leaderboard: any[] = []
+  isLoading = false
 
   constructor(private leaderboardService: LeaderboardService) { }
 
@@ -19,9 +20,16 @@ export class UserRankComponent {
   ])
 
   onClick() {
+    this.isLoading = true;
     this.leaderboardService.getUserRank(this.userId.value).subscribe({
-      next: (data: any) => this.leaderboard = data,
-      error: (err) => console.log(err)
+      next: (data: any) => {
+        this.leaderboard = data
+        this.isLoading = false
+      },
+      error: (err) => {
+        console.log(err)
+        this.isLoading = false
+      }
     })
     this.userId.reset()
   }

@@ -10,13 +10,20 @@ import { LeaderboardService } from '../../services/leaderboard.service';
 })
 export class CurrentWeekComponent {
   leaderboard: any[] = []
+  isLoading = true
 
   constructor(private leaderboardService: LeaderboardService) { }
 
   ngOnInit() {
     this.leaderboardService.getCurrentWeekLeaderboard().subscribe({
-      next: (data: any) => this.leaderboard = data,
-      error: (err) => console.log(err)
+      next: (data: any) => {
+        this.leaderboard = data
+        this.isLoading = false
+      },
+      error: (err) => {
+        console.log(err)
+        this.isLoading = false
+      }
     })
   }
 }
